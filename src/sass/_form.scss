@@ -1,0 +1,37 @@
+.search-form {
+  display: flex;
+  justify-content: center;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  background-color: #2c76a4;
+}
+
+.form__wrapper {
+  position: relative;
+}
+
+.form__input {
+  width: 300px;
+  height: 30px;
+}
+
+.form__search-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  height: 100%;
+  width: 55px;
+
+  background-image: url(../images/icons8-search.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  border: 1px solid #898989;
+  border-left: none;
+
+  cursor: pointer;
+}
