@@ -22,32 +22,46 @@ refs.form.addEventListener('submit', async e => {
   successNotification(apiService.searchParams.get('per_page'));
 
   const inputValue = e.target.elements.searchQuery.value;
+
+  if (inputValue !== apiService.searchParams.get('q')) {
+    apiService.clearPage();
+  }
+
   apiService.searchParams.set('q', inputValue);
 
   await apiService.fetchImage().then(data => {
-    apiService.maxPage = Math.round(
-      data.totalHits / apiService.searchParams.get('per_page')
-    );
-
-    if (apiService.page > apiService.maxPage) {
-      return maxPageNotification();
-    }
-
     if (apiService.searchParams.get('q') !== apiService.searchParams.get('q')) {
       refs.gallery.innerHTML = '';
       successNotification(apiService.searchParams.get('per_page'));
     }
 
-    renderingMarkup(createMarkupGallery(data));
+    renderingMarkup(createMarkupGallery(data.hits));
+
+    apiService.maxPage = Math.round(
+      data.totalHits / apiService.searchParams.get('per_page')
+    );
+    if (apiService.page >= apiService.maxPage) {
+      refs.loadMoreBtn.classList.remove('visible');
+    } else {
+      refs.loadMoreBtn.classList.add('visible');
+    }
   });
-  refs.loadMoreBtn.classList.add('visible');
 
   const gallery = new SimpleLightbox('.gallery a');
+
+  // if()
 });
 
 refs.loadMoreBtn.addEventListener('click', async () => {
   await apiService.fetchImage().then(data => {
-    addedMoreImageCard(createMarkupGallery(data));
+    apiService.maxPage = Math.round(
+      data.totalHits / apiService.searchParams.get('per_page')
+    );
+
+    if (apiService.page >= apiService.maxPage) {
+      return maxPageNotification();
+    }
+    addedMoreImageCard(createMarkupGallery(data.hits));
   });
 
   const gallery = new SimpleLightbox('.gallery a');

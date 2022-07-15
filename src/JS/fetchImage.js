@@ -21,12 +21,17 @@ export default class fetchingAPI {
     return axios
       .get(`${this.BASIC_URL}?page=${this.page}&${this.searchParams}`)
       .then(({ data }) => {
+        // console.log(data);
         this.incrementPage();
-        return data.hits;
+        return data;
       });
   }
 
   incrementPage() {
     this.page += 1;
+  }
+
+  clearPage() {
+    this.page = 1;
   }
 }
