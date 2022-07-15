@@ -43,7 +43,6 @@ refs.form.addEventListener('submit', async e => {
   refs.loadMoreBtn.classList.add('visible');
 
   const gallery = new SimpleLightbox('.gallery a');
-  gallery.on();
 });
 
 refs.loadMoreBtn.addEventListener('click', async () => {
